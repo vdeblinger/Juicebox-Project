@@ -1,11 +1,15 @@
 const pg = require('pg');
-const client = new pg.Client({
+let client 
+if (process.env.db_url){
+    client = new pg.Client(process.env.db_url)
+} else {
+    client = new pg.Client({
     host: 'localhost',
     database: 'juicebox-dev',
     port: 5432,
     user: 'tori',
     password: 'muffin',
-})
+})};
 
 async function createUser({ username, password, name, location }) {
     try {
